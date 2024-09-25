@@ -10,8 +10,8 @@ The repo holds the set of codes required to read and write data to an S3 bucket
 ### Installation
 1. Clone the repository:
    
-   git clone https://github.com/olanrewajuolawumi/tech_support_chatbot.git
-   cd tech_support_chatbot
+   > git clone https://github.com/olanrewajuolawumi/tech_support_chatbot.git
+   > cd tech_support_chatbot
    
   
 2. Set up a virtual environment:
