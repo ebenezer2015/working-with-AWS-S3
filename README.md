@@ -10,7 +10,7 @@ The repo holds the set of codes required to read and write data to an S3 bucket
 ### Installation
 1. Clone the repository:
    
-   > (git clone https://github.com/ebenezer2015/working-with-AWS-S3.git)
+   > git clone https://github.com/ebenezer2015/working-with-AWS-S3.git
    
    > cd aws_s3_bucket
    
