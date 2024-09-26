@@ -4,8 +4,12 @@
 The repo holds the set of codes required to read and write data to an S3 bucket 
 
 ### Features
-* Reading a csv file from the bucket.
-* Writing a csv file to the bucket.
+* List to the Bucket for a new file.
+* Check if the new file is the format of a file to be processed. 
+* Reading the file from the bucket.
+* Process the file.
+* Safe the processed output into a staging area.
+* Writing the processed output file to the bucket.
 
 ### Installation
 1. Clone the repository:
