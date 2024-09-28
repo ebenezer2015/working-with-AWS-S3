@@ -5,9 +5,13 @@ from io import StringIO
 import sys
 from botocore.exceptions import ClientError
 from model_pipeline import model_pipeline
+## Adding logger instead of print
 
 
 class S3FileHandler:
+    """
+    This class 
+    """
     def __init__(self, bucket_name, access_key, secret_access_key):
         self.bucket_name = bucket_name
         self.access_key = access_key
@@ -19,6 +23,11 @@ class S3FileHandler:
         )
         
     def check_s3_bucket_exists(self):
+        """
+        This method is used to check if the provided s3 path does exist.
+        Uses the list_csv_files method to return all the files in the bucket as a list.
+        Uses the read_csv_from_s3 method to read all the files as a Data Frame.
+        """
         try:
             self.s3_client.head_bucket(Bucket=self.bucket_name)
             print(f"Bucket '{self.bucket_name}' exists.")
@@ -45,10 +54,11 @@ class S3FileHandler:
 
     def read_csv_from_s3(self, csv_files):
         """
-        Reads CSV files from an S3 bucket into Pandas DataFrames and merges them.
+        Reads CSV files from an S3 bucket into Pandas DataFrames and joins them
+        if the files were more than one.
 
         Args:
-            csv_files (list): List of .csv file keys.
+            csv_files (list): List of .csv file keys returned by list_csv_files method.
 
         Returns:
             DataFrame: Merged DataFrame of all .csv files.
@@ -90,10 +100,16 @@ class S3FileHandler:
 
 class ApplicationProcessor(S3FileHandler):
 
+    
     def __init__(self, bucket_name, access_key, secret_access_key):
         super().__init__(bucket_name, access_key, secret_access_key)
 
+    
     def read_data(self):
+        """
+        This method uses check_s3_bucket_exists method to check if the provided s3 path does exist, 
+        rename the column of the read files if the file is not empty.
+        """
         trans_data = self.check_s3_bucket_exists()
         if not trans_data.empty:
             columns = [
@@ -113,6 +129,7 @@ class ApplicationProcessor(S3FileHandler):
         
         return trans_data
 
+    
     @staticmethod
     def convert_columns(df, column_types):
         """
@@ -135,6 +152,7 @@ class ApplicationProcessor(S3FileHandler):
                 print(f"Warning: Column '{col}' does not exist in the DataFrame.")
         return df
 
+    
     def merge_with_do_good(self, do_good_bucket_name, df):
         """
         Merges the input DataFrame with the Do Good table from another S3 bucket.
@@ -168,6 +186,7 @@ class ApplicationProcessor(S3FileHandler):
         
         return merged_df
 
+        
 def ml_orchestrator(access_key, secret_access_key, bucket_name='scetru-ml-bucket'):
     """
     Orchestrates the ML pipeline, reading data from the specified S3 bucket,
