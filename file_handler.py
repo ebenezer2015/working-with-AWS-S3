@@ -100,7 +100,6 @@ class S3FileHandler:
 
 class ApplicationProcessor(S3FileHandler):
 
-    
     def __init__(self, bucket_name, access_key, secret_access_key):
         super().__init__(bucket_name, access_key, secret_access_key)
 
